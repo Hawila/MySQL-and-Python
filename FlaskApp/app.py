@@ -1,16 +1,20 @@
-from flask import Flask, render_template, json, request, redirect, session
-from flask.ext.mysql import MySQL
-from werkzeug import generate_password_hash, check_password_hash
+from flask import Flask, render_template, json, request, redirect, session, jsonify
+from flaskext.mysql import MySQL
+import pymysql
+import mysql.connector
+import os
 
 app = Flask(__name__)
 
 mysql = MySQL()
 
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'UyNh4eve@6514'
-app.config['MYSQL_DATABASE_DB'] = 'bucketlist'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = os.getenv('MYSQL_DATABASE_USER')
+app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_DATABASE_PASSWORD')
+app.config['MYSQL_DATABASE_DB'] = os.getenv('MYSQL_DATABASE_DB')
+app.config['MYSQL_DATABASE_HOST'] = os.getenv('MYSQL_DATABASE_HOST')
+
+
 mysql.init_app(app)
 
 # set a secret key for the session
@@ -19,6 +23,7 @@ app.secret_key = 'why would I tell you my secret key?'
 @app.route("/")
 def main():
     return render_template('index.html')
+
 
 @app.route('/showSignUp')
 def showSignUp():
@@ -42,7 +47,7 @@ def signUp():
 
         data = cursor.fetchall()
 
-        if len(data) is 0:
+        if len(data) == 0:
             conn.commit()
             return json.dumps({'message':'User created successfully !'})
         else:
@@ -109,7 +114,7 @@ def addWish():
             cursor.callproc('sp_addWish',(_title,_description,_user))
             data = cursor.fetchall()
  
-            if len(data) is 0:
+            if len(data) == 0:
                 conn.commit()
                 return redirect('/userHome')
             else:
@@ -150,4 +155,4 @@ def getWish():
         return render_template('error.html', error = str(e))
 
 if __name__ == "__main__":
-    app.run(port=5002,debug=True)
+    app.run(host="0.0.0.0",port=5002,debug=True)
