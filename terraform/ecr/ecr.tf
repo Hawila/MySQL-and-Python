@@ -1,15 +1,13 @@
-resource "aws_ecr_repository" "flask_repo" {
-  name                 = "flask-app"
 
-  image_scanning_configuration {
-    scan_on_push = true
-  }
+resource "aws_ecrpublic_repository" "flask_repo" {
+  repository_name = "flask-webapp"
+
+
+  
 }
 
-resource "aws_ecr_repository" "mysql_repo" {
-  name                 = "mysqldb"
+resource "aws_ecrpublic_repository" "mysql_repo" {
+  repository_name = "mysqldb"
 
-  image_scanning_configuration {
-    scan_on_push = true
-  }
+ 
 }
