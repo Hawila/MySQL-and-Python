@@ -72,7 +72,7 @@ pipeline {
                 sh """#!/bin/bash
                     kubectl -n ingress-nginx -ojson get service ingress-nginx-controller > sv.json
                     jq '.status.loadBalancer.ingress[0].hostname' sv.json > url.txt
-                    sed -i 's/^./http:\\/\\//;s/.\$//' url.txt'
+                    sed -i 's/^./http:\\/\\//;s/.\$//' url.txt
                     cat url.txt
                     """
             }
