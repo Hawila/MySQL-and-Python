@@ -87,11 +87,11 @@ resource "aws_iam_role" "workernodes" {
   node_group_name = "sprint-workernodes"
   node_role_arn  = aws_iam_role.workernodes.arn
   subnet_ids   = [aws_subnet.public_1.id, aws_subnet.public_2.id]
-  instance_types = ["t2.micro"]
+  instance_types = ["t3.small"]
  
   scaling_config {
-   desired_size = 2
-   max_size   = 2
+   desired_size = 1
+   max_size   = 1
    min_size   = 1
   }
  

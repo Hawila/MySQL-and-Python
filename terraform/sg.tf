@@ -1,7 +1,7 @@
 resource "aws_security_group" "sg-1" {
   name        = "ec2 sg"
    description = "Allow HTTP and SSH traffic via Terraform"
-  vpc_id      = aws_default_vpc.default.id
+  vpc_id      = aws_vpc.my_vpc.id
 
    ingress {
     from_port   = 80

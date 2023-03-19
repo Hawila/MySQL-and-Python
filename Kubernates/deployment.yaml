@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flask-deployment
+  namespace: ingress-nginx
   labels:
     app: flask
 spec:
@@ -19,18 +20,21 @@ spec:
         image: public.ecr.aws/t0o2r4y2/flask-webapp:latest
         ports:
         - containerPort: 5002
+        envFrom:
+          - configMapRef:
+              name: app-configmap
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
   name: flask-app-service
+  namespace: ingress-nginx
 spec:
   selector:
     app: flask
   ports:
-  - port: 6000
+  - port: 80
     targetPort: 5002
-    nodePort: 30010
     protocol: TCP
-  type: NodePort
+  type: ClusterIP
