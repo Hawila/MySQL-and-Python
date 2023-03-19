@@ -26,6 +26,8 @@
       - python3 
       - gnupg
       - lsb-release
+      - acl
+      - jq
   
   - name:  update apt
     apt:
@@ -80,6 +82,10 @@
   - name: install Kubectl
     shell: install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
     become: yes
+
+  - name: Giving Jenkins Access to docker.sock  
+    shell: setfacl --modify user:jenkins:rw /var/run/docker.sock
+    become: yes  
 
   - name: daemon-reload to pick up config changes
     ansible.builtin.systemd:

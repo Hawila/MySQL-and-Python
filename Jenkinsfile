@@ -7,6 +7,7 @@ pipeline {
         flaskApp = "public.ecr.aws/t0o2r4y2/flask-webapp"
         mysql_image = "public.ecr.aws/t0o2r4y2/mysqldb"
         REGION = "us-east-1"
+        CLUSTER_NAME = "sprint-cluster"
     }
 
     stages {
@@ -38,6 +39,40 @@ pipeline {
         stage('Push Mysql Image') {
             steps {
                 sh "docker push ${mysql_image}:$BUILD_NUMBER"
+            }
+        }
+        stage('EKS kubeconfig') {
+            steps {
+                sh "aws eks --region ${REGION} update-kubeconfig --name ${CLUSTER_NAME}"
+            }
+        }
+        
+        stage('Updating k8s mainfest'){
+            steps {
+                echo 'replacing old images with the new one'
+                sh "sed -i \"s|image:*|image: ${flaskApp}:$BUILD_NUMBER|g\" Kubernates/deployment.yaml"
+                sh "sed -i \"s|image:*|image: ${mysql_image}:$BUILD_NUMBER|g\" Kubernates/statfulset.yaml"
+            }
+        }
+        stage('Install ingress-controller'){
+            steps{
+                sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.6.4/deploy/static/provider/aws/deploy.yaml'
+            }
+        }
+        stage('Deploy Kubernates Files') {
+            steps{
+                sh'kubectl apply -f Kubernates/pv.yaml -f Kubernates/db-configmap.yaml -f Kubernates/app-configmap.yaml'
+                sh'kubectl apply -f -f Kubernates/statfulset.yaml -f Kubernates/deployment.yaml'
+                sh'kubectl apply -f Kubernates/ingress.yaml'
+                
+            }
+        }
+        stage('Getting Service Ip'){
+            steps{
+                sh 'kubectl -n ingress-nginx -ojson get service ingress-nginx-controller > sv.json'
+                sh "jq '.status.loadBalancer.ingress[0].hostname' sv.json > url.txt"
+                sh "sed 's/^./http:\/\//;s/.$//' url.txt > output.txt"
+                sh "cat output.txt"
             }
         }
     }
