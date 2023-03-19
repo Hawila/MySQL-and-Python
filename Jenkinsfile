@@ -27,7 +27,7 @@ pipeline {
         }
         stage('ECR Login') {
             steps {
-                sh "aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin docker login --username AWS --password-stdin public.ecr.aws/t0o2r4y2"
+                sh "aws ecr-public get-login-password --region ${REGION} | docker login --username AWS --password-stdin public.ecr.aws/t0o2r4y2"
             }
         }
         stage('Push Flask Image') {
