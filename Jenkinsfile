@@ -62,7 +62,7 @@ pipeline {
         stage('Deploy Kubernates Files') {
             steps{
                 sh'kubectl apply -f Kubernates/pv.yaml -f Kubernates/db-configmap.yaml -f Kubernates/app-configmap.yaml'
-                sh'kubectl apply -f -f Kubernates/statfulset.yaml -f Kubernates/deployment.yaml'
+                sh'kubectl apply -f Kubernates/statfulset.yaml -f Kubernates/deployment.yaml'
                 sh'kubectl apply -f Kubernates/ingress.yaml'
                 
             }
