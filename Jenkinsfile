@@ -50,8 +50,8 @@ pipeline {
         stage('Updating k8s mainfest'){
             steps {
                 echo 'replacing old images with the new one'
-                sh "sed -i \"s|image:*|image: ${flaskApp}:$BUILD_NUMBER|g\" Kubernates/deployment.yaml"
-                sh "sed -i \"s|image:*|image: ${mysql_image}:$BUILD_NUMBER|g\" Kubernates/statfulset.yaml"
+                sh "sed -i 's/image:*/image: ${flaskApp}:$BUILD_NUMBER/g' Kubernates/deployment.yaml"
+                sh "sed -i 's/image:*/image: ${mysql_image}:$BUILD_NUMBER/g' Kubernates/statfulset.yaml"
             }
         }
         stage('Install ingress-controller'){
