@@ -69,12 +69,10 @@ pipeline {
         }
         stage('Getting Service Ip'){
             steps{
-                sh """#!/bin/bash
-                    kubectl -n ingress-nginx -ojson get service ingress-nginx-controller > sv.json
-                    jq '.status.loadBalancer.ingress[0].hostname' sv.json > url.txt
-                    sed -i 's/^./http:\\/\\//;s/.$//' url.txt'
-                    cat url.txt
-                    """
+                sh 'kubectl -n ingress-nginx -ojson get service ingress-nginx-controller > sv.json'
+                sh "jq '.status.loadBalancer.ingress[0].hostname' sv.json > url.txt"
+                sh "sed -i 's/^./http:\\/\\//;s/.$//' url.txt"
+                sh "cat url.txt"
             }
         }
     }
