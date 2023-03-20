@@ -56,7 +56,8 @@ execute the script
     ./bash.sh
 ```
 script will run everything in terraform and ansible to create the infrastructure and will create a log file in project dir consist of all steps done 
-image:bash
+![bash-log](https://user-images.githubusercontent.com/23001599/226409475-6ff6e7d3-470d-43fb-8ae0-f793eda13e35.png)
+
 
 Skip Manual installation  
 
@@ -73,7 +74,8 @@ run terraform init the terraform apply
 Through terraform apply process 2 local-execute occured into shell 
 - first local-exec create ec2-key.pem in Home Dir ~/ec2-key
 - Second local-exec create inventory.txt in ansible dir 
-3:image
+![3](https://user-images.githubusercontent.com/23001599/226409635-36709a83-b1af-4846-a14a-3a5316448a23.png)
+
 
  cd into ansible and change ec2-key permission for successful connection 
 ```bash
@@ -85,30 +87,37 @@ next run ansible-playbook
     ansible-playbook -i inventory.txt install-jenkins.yml
 ```
 ### Configure Jenkins
-8:image
+![8](https://user-images.githubusercontent.com/23001599/226410198-7fd0a65c-3594-4fb4-bcdb-96d8d04829d3.png)
+
 after complation of ansible script cd into home dir and connect to ec2 by ssh
 
 ```bash
     cd ~
     ssh -i ec2-key.pem ubuntu@<instance-ip-address>
 ```
-9:image
+![9](https://user-images.githubusercontent.com/23001599/226410335-a088ae3a-a5a2-4448-9d43-ae2f721a0457.png)
+
 configure aws credintial first
 ```bash
     aws configure
 ```
-14:image
+
+![14](https://user-images.githubusercontent.com/23001599/226410373-bb562d3c-b826-4756-b658-4dc6df9ca854.png)
 cat the following then copy the result 
 ```bash
     cat /var/lib/jenkins/secret/initialAdminPassword
 ```
 now open browser and navigate to this url <ec2-instance-public-ip>:8080 
 - paste the value here
-10:image
+    
+![10](https://user-images.githubusercontent.com/23001599/226410616-203ecaa5-aacb-4b92-9038-103efc318f6b.png)
+
 - install suggested plugins
-11:image
+![11](https://user-images.githubusercontent.com/23001599/226410674-a863d0a9-31af-48c2-ad2d-a4acebc27e8e.png)
+
 - click save and finish (save this url for later we will use it in github webhook payload)
-12:image
+![12](https://user-images.githubusercontent.com/23001599/226410932-57b6257b-6479-4bc5-94bf-3857fc969065.png)
+
 
 Next go to Manage jenkins Credintials and add the following
 - github Credintial As username with password
