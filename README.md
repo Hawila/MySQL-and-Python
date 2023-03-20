@@ -123,19 +123,23 @@ Next go to Manage jenkins Credintials and add the following
 - github Credintial As username with password
 - aws_access_key as secret text
 - aws_secret_access_key as secret text 
-13:image
+![13](https://user-images.githubusercontent.com/23001599/226411345-3bddf099-d076-49ca-9dcc-f22dfb638815.png)
+
 
 ## Configure Pipeline
 - create new item
 - choose pipeline or multibranch pipeline 
 - check github hook trigger in build triggers
-16:image
+![16](https://user-images.githubusercontent.com/23001599/226411390-c6da231e-fd5d-45ee-8fe3-cedd3868ad44.png)
+
 - choose pipeline from scm 
-17:image
+![17](https://user-images.githubusercontent.com/23001599/226411448-bc1dbe85-3840-4084-ae4f-240243fe7382.png)
+
 
 ## Configure github webhook
 - in github repo go to repo setting click on webhook and configure as following 
-15:image
+![15](https://user-images.githubusercontent.com/23001599/226411479-66660dc7-7efb-4148-8444-1b3dd4f379d0.png)
+
 
 ### Everything is configured and any commit to the repo will trigger the pipeline that will
 ### run jenkins file in the repo that do the following 
@@ -147,27 +151,34 @@ Next go to Manage jenkins Credintials and add the following
     - install ingress controller
     - deploy all kubernates filles 
     - (BONUS) Last stage getting ingress service controller description as json format and use a jq to extract value of LoadBalancer ingress url the applying sed command  in place to add http to url to make it hyperlink then cat the result to the console log  
+---------
+    
+![18](https://user-images.githubusercontent.com/23001599/226412361-b626f0e7-19b5-4130-873c-05c80e20a19f.png)
 
-18:image
 
 - pipeline will echo url of loadbalancer in logs 
 
-19:image
+![19](https://user-images.githubusercontent.com/23001599/226412407-0a4f3b47-c6f3-44df-a3ff-5340b87b413c.png)
+
 
 - open url in browser will navigate to flask web app frontend
  
- 20:image
+![20](https://user-images.githubusercontent.com/23001599/226412461-fd775b98-fa2b-4125-bfe3-838d59f75a23.png)
+
 
 - click sign up (email must be like this format (anystring @ anystring.com)
 - now login with your credintials and add wish 
-22:image
+![22](https://user-images.githubusercontent.com/23001599/226412501-daec7849-e458-4b2e-bd2b-d0e0396d8bf6.png)
+
 
 - github hook log
-hook:image
+![hook-log](https://user-images.githubusercontent.com/23001599/226412536-ca6b257b-1d89-42e9-8be8-cefda33f1d1c.png)
+
 
 - (BONUS)liveness and readiness using tcp socket 
 configured in deployment.yml file 
-liveness:image
+![liveness-rediness](https://user-images.githubusercontent.com/23001599/226412575-7f5ba0ea-9047-42e2-9dd1-13efcd4cfc7b.png)
+
 
 
 
