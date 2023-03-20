@@ -107,7 +107,7 @@ cat the following then copy the result
 ```bash
     cat /var/lib/jenkins/secret/initialAdminPassword
 ```
-now open browser and navigate to this url <ec2-instance-public-ip>:8080 
+now open browser and navigate to this url ec2-instance-public-ip:8080 
 - paste the value here
     
 ![10](https://user-images.githubusercontent.com/23001599/226410616-203ecaa5-aacb-4b92-9038-103efc318f6b.png)
