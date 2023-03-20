@@ -20,6 +20,16 @@ spec:
         image: public.ecr.aws/t0o2r4y2/flask-webapp:latest
         ports:
         - containerPort: 5002
+        readinessProbe:
+          tcpSocket:
+            port: 5002
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 5002
+          initialDelaySeconds: 15
+          periodSeconds: 20
         envFrom:
           - configMapRef:
               name: app-configmap
